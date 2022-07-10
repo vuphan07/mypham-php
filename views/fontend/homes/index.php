@@ -39,7 +39,7 @@
 												<span class="product__sale-text">Giảm</span>
 											</div>
 										</div>
-										<a href="product.html" class="viewDetail">Xem chi tiết</a>
+										<a href="?controller=product&action=detail&id=<?= $product['id'] ?>" class="viewDetail">Xem chi tiết</a>
 										<button style="outline: none;border:none;" onclick="addToCart(<?= $product['id'] ?>)" class="addToCart">Thêm vào giỏ</button>
 									</div>
 								</div>

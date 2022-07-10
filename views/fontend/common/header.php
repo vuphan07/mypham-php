@@ -1,6 +1,9 @@
 <?php
-
-$listCategories = $categories['data'];
+if(isset($categories['data'])) {
+    $listCategories = $categories['data'];
+}else {
+    $listCategories = [];
+}
 
 ?>
 
@@ -127,7 +130,7 @@ if (isset($_SESSION['cart'])) {
                         foreach ($categories['data'] as &$category) { ?>
                             <ul class="sub-nav">
                                 <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link"><?= $category['name'] ?></a>
+                                    <a href="?controller=product&action=category&id=<?= $category['id']  ?>" class="sub-nav__link"><?= $category['name'] ?></a>
                                 </li>
                             </ul>
                     <?php  }

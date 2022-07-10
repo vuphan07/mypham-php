@@ -39,11 +39,11 @@
                                 <div class="col l-2 m-2 s-0">
                                     <div class="buttons_added">
                                         <a href="?controller=cart&action=delete&id=<?= $cart['id'] ?>">
-                                            <input class="minus is-form" type="button" value="-" onclick="minusProduct()">
+                                            <input class="minus is-form" type="button" value="-">
                                         </a>
                                         <input aria-label="quantity" class="input-qty" max="10" min="1" name="" type="number" value="<?= $cart['quantity'] ?>">
                                         <a href="?controller=cart&action=store&id=<?= $cart['id'] ?>">
-                                            <input class="minus is-form" type="button" value="+" onclick="minusProduct()">
+                                            <input class="minus is-form" type="button" value="+">
                                         </a>
                                     </div>
                                 </div>
