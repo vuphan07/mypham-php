@@ -5,7 +5,7 @@ class Database
     const HOST = 'localhost';
     const USERNAME = 'root';
     const PASSWORD = '';
-    const DB_NAME = 'hang';
+    const DB_NAME = 'mypham';
 
     public function connect()
     {

@@ -123,6 +123,10 @@
                         <input type="text" required name="description" class="form-control">
                     </div>
                     <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <label class="form-label minWidth-100">discount </label>
+                        <input type="text" required name="discount" class="form-control">
+                    </div>
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
                         <label class="form-label minWidth-100">image </label>
                         <input type="file" required name="image" id="fileToUpload" class="form-control">
                     </div>

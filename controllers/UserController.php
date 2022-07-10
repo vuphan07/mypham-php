@@ -50,9 +50,9 @@ class UserController extends BaseController
             $email = isset($_POST['email']) ? $_POST['email'] : "";
             $phone = isset($_POST['phone']) ? $_POST['phone'] : "";
             $id = isset($_POST['userid']) ? $_POST['userid'] : "";
-            if ( !$password || !$phone || !$email || !$id) {
+            if (!$password || !$phone || !$email || !$id) {
                 if ($_SERVER["HTTP_REFERER"])
-                return header("Location: " . $_SERVER["HTTP_REFERER"]);
+                    return header("Location: " . $_SERVER["HTTP_REFERER"]);
             }
 
             $data = [
@@ -61,13 +61,13 @@ class UserController extends BaseController
                 "password" => $password
             ];
 
-            $this->userModel->updateById($id,$data);
+            $this->userModel->updateById($id, $data);
             if ($_SERVER["HTTP_REFERER"])
-            return header("Location: " . $_SERVER["HTTP_REFERER"]);
+                return header("Location: " . $_SERVER["HTTP_REFERER"]);
             return header("Location: index.php ");
         } else {
             if ($_SERVER["HTTP_REFERER"])
-            return header("Location: " . $_SERVER["HTTP_REFERER"]);
+                return header("Location: " . $_SERVER["HTTP_REFERER"]);
             return header("Location: index.php ");
         }
     }
@@ -75,66 +75,52 @@ class UserController extends BaseController
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = isset($_POST['username']) ? $_POST['username'] : "";
-            $password = isset($_POST['password']) ? $_POST['password'] : "";
+            $username = isset($_POST['data']['username']) ? $_POST['data']['username'] : "";
+            $password = isset($_POST['data']['password']) ? $_POST['data']['password'] : "";
             if (!$username || !$password) {
-                if ($_SERVER["HTTP_REFERER"])
-                    return header("Location: " . $_SERVER["HTTP_REFERER"]);
+                echo "fail";
+                return false;
             }
             $user = $this->userModel->login($username, $password);
             if ($user === null) {
-                if ($_SERVER["HTTP_REFERER"])
-                    return header("Location: " . $_SERVER["HTTP_REFERER"]);
+                echo "fail";
+                return false;
             }
             if (!$user['status']) {
-                if ($_SERVER["HTTP_REFERER"])
-                    return header("Location: " . $_SERVER["HTTP_REFERER"]);
+                echo "fail";
+                return false;
             }
             $_SESSION['user'] = $user['data'];
-            if ($_SERVER["HTTP_REFERER"])
-                return header("Location: " . $_SERVER["HTTP_REFERER"]);
-            return header("Location: index.php ");
+            echo "success";
+            return false;
         } else {
-            if ($_SERVER["HTTP_REFERER"])
-                return header("Location: " . $_SERVER["HTTP_REFERER"]);
-            return header("Location: index.php ");
+            echo "fail";
+            return false;
         }
     }
 
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = isset($_POST['username']) ? $_POST['username'] : "";
-            $password = isset($_POST['password']) ? $_POST['password'] : "";
-            $email = isset($_POST['email']) ? $_POST['email'] : "";
-            $phone = isset($_POST['phone']) ? $_POST['phone'] : "";
-            $confirmpassword = isset($_POST['confirmpassword']) ? $_POST['confirmpassword'] : "";
+
+            $username = isset($_POST['data']['username']) ? $_POST['data']['username'] : "";
+            $password = isset($_POST['data']['password']) ? $_POST['data']['password'] : "";
+            $email = isset($_POST['data']['email']) ? $_POST['data']['email'] : "";
+            $phone = isset($_POST['data']['phone']) ? $_POST['data']['phone'] : "";
+            $confirmpassword = isset($_POST['data']['confirmpassword']) ? $_POST['data']['confirmpassword'] : "";
             if (!$username || !$password || !$confirmpassword || !$phone || !$email) {
-                if ($_SERVER["HTTP_REFERER"])
-                    return header("Location: " . $_SERVER["HTTP_REFERER"]);
+                return false;
             }
             $user = $this->userModel->register($username, $password, $confirmpassword, $email, $phone);
             if ($user === null) {
-                if ($_SERVER["HTTP_REFERER"])
-                    return header("Location: " . $_SERVER["HTTP_REFERER"]);
-            }
-            $user = $this->login($user, $password);
-            if ($user === null) {
-                if ($_SERVER["HTTP_REFERER"])
-                    return header("Location: " . $_SERVER["HTTP_REFERER"]);
-            }
-            if (!$user['status']) {
-                if ($_SERVER["HTTP_REFERER"])
-                    return header("Location: " . $_SERVER["HTTP_REFERER"]);
+                echo ("register fail");
+                return false;
             }
             $_SESSION['user'] = $user['data'];
-            if ($_SERVER["HTTP_REFERER"])
-                return header("Location: " . $_SERVER["HTTP_REFERER"]);
-            return header("Location: index.php ");
+            echo ("success");
+            return true;
         } else {
-            if ($_SERVER["HTTP_REFERER"])
-                return header("Location: " . $_SERVER["HTTP_REFERER"]);
-            return header("Location: index.php ");
+            return false;
         }
     }
 

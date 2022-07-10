@@ -79,6 +79,7 @@ class ProductController extends BaseController
                 $quantity = isset($_POST["quantity"]) ?  $_POST["quantity"] : '';
                 $category_id = isset($_POST["category_id"]) ?  $_POST["category_id"] : '';
                 $description = isset($_POST["description"]) ?  $_POST["description"] : '';
+                $discount = isset($_POST["discount"]) ?  $_POST["discount"] : '';
                 $id = isset($_POST["idproduct"]) ?  $_POST["idproduct"] : '';
                 if (!$name || !$price || !$quantity || !$category_id || !$description || !$image) {
                     if ($_SERVER["HTTP_REFERER"])
@@ -93,6 +94,7 @@ class ProductController extends BaseController
                     "image" => $image,
                     "category_id" => $category_id,
                     "description" => $description,
+                    "discount" => $discount,
                 ];
                 if ($id) {
                     $this->productModel->updateById($id, $data);

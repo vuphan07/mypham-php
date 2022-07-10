@@ -69,10 +69,9 @@ class OrderController extends BaseController
                 try {
                     $this->orderItemModel::$connect->begin_transaction();
                     $userId = isset($_POST['data']['userId']) ? $_POST['data']['userId'] : '';
-                    $shipping = isset($_POST['data']['shipping']) ? $_POST['data']['shipping'] : '';
                     $discountCode = isset($_POST['data']['discountCode']) ? $_POST['data']['discountCode'] : '';
                     $price = isset($_POST['data']['price']) ? $_POST['data']['price'] : '';
-                    if (!$userId || !$shipping) {
+                    if (!$userId) {
                         echo $this->formatRespon("đặt hàng thất bại", 0);
                         return;
                     }
@@ -84,7 +83,6 @@ class OrderController extends BaseController
                                 "user_id" => $userId,
                                 "discount_id" => $discountCode,
                                 "cost" => $price,
-                                "shipping" => $shipping
                             ];
                             $discountCodeQuantity = $discountCodes['data'][0]['count'] - 1;
                             $result = $this->orderModel->store($dataOrder);
@@ -132,7 +130,6 @@ class OrderController extends BaseController
                         $dataOrder = [
                             "user_id" => $userId,
                             "cost" => $price,
-                            "shipping" => $shipping
                         ];
                         $result = $this->orderModel->store($dataOrder);
 

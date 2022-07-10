@@ -1,87 +1,103 @@
 <?php include 'views/fontend/common/head.php' ?>
 <?php include 'views/fontend/common/header.php' ?>
-<?php $totalCart = array_reduce($_SESSION['cart'], function ($sum, $item) {
-    $sum += $item['price'] * $item['quantity'];
-    return $sum;
-}) ?>
-<div class="card">
-    <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) { ?>
-        <div class="row">
-            <div class="col-md-8 cart">
-                <div class="title">
-                    <div class="row">
-                        <div class="col">
-                            <h4><b>Shopping Cart</b></h4>
+<?php if (isset($_SESSION['cart'])) {
+    $totalCart = array_reduce($_SESSION['cart'], function ($sum, $item) {
+        $sum += ($item['price'] - $item['discount']) * $item['quantity'];
+        return $sum;
+    });
+} else {
+    $totalCart = 0;
+} ?>
+
+<body>
+    <?php count($products['data']) > 0 ? include 'views/fontend/common/slide.php' : '' ?>
+    <div class="main">
+        <div class="grid wide">
+            <h3 class="main__notify">
+            </h3>
+            <div class="row">
+                <div class="col l-8 m-12 s-12">
+                    <div class="main__cart">
+                        <div class="row title">
+                            <div class="col l-4 m-4 s-8">Sản phẩm</div>
+                            <div class="col l-2 m-2 s-0">Giá</div>
+                            <div class="col l-2 m-2 s-0">Số lượng</div>
+                            <div class="col l-2 m-2 s-4">Tổng</div>
+                            <div class="col l-1 m-1 s-0">Xóa</div>
                         </div>
-                        <div class="col align-self-center text-right text-muted"><?= count($_SESSION['cart']) ?> items</div>
-                    </div>
-                </div>
-                <?php foreach ($_SESSION['cart'] as &$cart) { ?>
-                    <div class="row border-top border-bottom">
-                        <div class="row main align-items-center">
-                            <div class="col-2"><img class="img-fluid" src="<?= $cart['image'] ?>"></div>
-                            <div class="col">
-                                <!-- <div class="row text-muted"><?= $cart['name'] ?></div> -->
-                                <div class="row"><?= $cart['name'] ?></div>
+                        <?php if (isset($_SESSION['cart'])) foreach ($_SESSION['cart'] as &$cart) { ?>
+                            <div class="row item">
+                                <div class="col l-4 m-4 s-8">
+                                    <div class="main__cart-product">
+                                        <img src="<?= $cart['image'] ?>" alt="">
+                                        <div class="name"><?= $cart['name'] ?></div>
+                                    </div>
+                                </div>
+                                <div class="col l-2 m-2 s-0">
+                                    <div class="main__cart-price"><?= $cart['price'] - $cart['discount'] ?> đ</div>
+                                </div>
+                                <div class="col l-2 m-2 s-0">
+                                    <div class="buttons_added">
+                                        <a href="?controller=cart&action=delete&id=<?= $cart['id'] ?>">
+                                            <input class="minus is-form" type="button" value="-" onclick="minusProduct()">
+                                        </a>
+                                        <input aria-label="quantity" class="input-qty" max="10" min="1" name="" type="number" value="<?= $cart['quantity'] ?>">
+                                        <a href="?controller=cart&action=store&id=<?= $cart['id'] ?>">
+                                            <input class="minus is-form" type="button" value="+" onclick="minusProduct()">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col l-2 m-2 s-4">
+                                    <div class="main__cart-price"><?= $cart['quantity'] * ($cart['price'] - $cart['discount'])  ?> đ</div>
+                                </div>
+                                <div class="col l-1 m-1 s-0">
+                                    <span class="main__cart-icon">
+                                        <i class="far fa-times-circle "></i>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="col">
-                                <a href="?controller=cart&action=delete&id=<?= $cart['id'] ?>">-</a><a href="#" class="border"><?= $cart['quantity'] ?></a><a href="?controller=cart&action=store&id=<?= $cart['id'] ?>">+</a>
+                        <?php } ?>
+                        <div onclick="(()=>window.location.reload())()" class="btn btn--default">
+                            Cập nhật giỏ hàng
+                        </div>
+                    </div>
+                </div>
+                <div class="col l-4 m-12 s-12">
+                    <div class="main__pay">
+                        <div class="main__pay-title">Thanh toán</div>
+                        <div class="pay-info">
+                            <div class="main__pay-text">
+                                Tổng phụ</div>
+                            <div class="main__pay-price">
+                                <?= $totalCart ?> ₫
                             </div>
-                            <div class="col">&dollar; <?= $cart['price'] * $cart['quantity'] ?> <span class="close"><a href="?controller=cart&action=destroy&id=<?= $cart['id'] ?>">&#10005;</a></span></div>
                         </div>
-                    </div>
-                <?php } ?>
-                <div class="back-to-shop"><a href="./index.php">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
-            </div>
-            <div class="col-md-4 summary">
-                <div>
-                    <h5><b>Summary</b></h5>
-                </div>
-                <hr>
-                <?php
-                foreach ($_SESSION['cart'] as $key => $value) { ?>
-                    <div class="row">
-
-                        <div class="col" style="padding-left:0;"><?= $value['name'] ?></div>
-                        <div class="col text-right">&dollar;
-                            <?= $value['price'] * $value['quantity'] ?>
+                        <div class="pay-info">
+                            <div class="main__pay-text">
+                                Giao hàng
+                            </div>
+                            <div class="main__pay-text">
+                                Giao hàng miễn phí
+                            </div>
                         </div>
+                        <div class="pay-info" id='row-discount-price'>
 
-                    </div>
-                <?php
-                } ?>
-
-                <p>phương thức thanh toán</p>
-                <select id="order-shipping">
-                    <?php foreach ($shippings['data'] as &$value) { ?>
-                        <option class="text-muted" name="shipping" value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
-                    <?php } ?>
-                </select>
-                <p>Địa chỉ</p>
-                <div class="input-group mb-3">
-                    <input id="input-address" name="address" type="text" class="form-control" placeholder="address" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                </div>
-                <p>Mã giảm giá</p>
-                <div class="input-group mb-3">
-                    <input id="input-discount-code" name="code" type="text" class="form-control" placeholder="Enter your code" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button type="button" class="input-group-text" onclick="checkCode(<?= $totalCart ?>)">áp dụng</button>
+                        </div>
+                        <div class="pay-info">
+                            <div class="main__pay-text">
+                                Tổng thành tiền</div>
+                            <div id="row-total-price" class="main__pay-price">
+                                <?= $totalCart ?> ₫
+                            </div>
+                        </div>
+                        <div class="btn btn--default orange" onclick="checkout(<?= isset($_SESSION['user']) ?  $_SESSION['user']['id'] : null ?>)">Tiến hành thanh toán</div>
+                        <div class="main__pay-title">Phiếu ưu đãi</div>
+                        <input id="input-discount-code" type="text" class="form-control">
+                        <div class="btn btn--default" onclick="checkCode(<?= $totalCart ?>)">Áp dụng</div>
                     </div>
                 </div>
-                <div id='row-discount-price'>
-
-                </div>
-
-                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col">Tổng giá</div>
-                    <div id='row-total-price' class="col text-right">&dollar;
-                        <?= $totalCart ?></div>
-                </div>
-                <button class="btn" onclick="checkout(<?= isset($_SESSION['user']) ?  $_SESSION['user']['id'] : null ?>)">CHECKOUT</button>
             </div>
         </div>
-    <?php } else {
-        echo "<div style='margin: 100px auto 0 auto; height:20vh;' >Giỏ hàng trống</div>";
-    } ?>
-</div>
+    </div>
+</body>
 <?php require 'views/fontend/common/footer.php' ?>
