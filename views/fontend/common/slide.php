@@ -1,9 +1,8 @@
 <div class="main__slice">
     <div class="slider">
-        <?php if (isset($products) && isset($products['data'])) { ?>
-            <?php $i=0; foreach ($products['data'] as &$productValue) {if($i<3){ ?>
-                <div class="slide active" style="background-image:url(public/assets/img/slider/slide-6.jpg)">
-                <!-- <div class="slide active" style="background-image:url(<?= $productValue['image'] ?>)"> -->
+        <?php if (isset($productsSlide) && isset($productsSlide['data'])) { ?>
+            <?php $i=0; foreach ($productsSlide['data'] as &$productValue) {if($i<3){ ?>
+                <div class="slide active" style="background-image:url(<?= $productValue['image'] ?>)">
 
                     <div class="container">
                         <div class="caption">

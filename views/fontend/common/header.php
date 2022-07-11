@@ -130,15 +130,12 @@ if (isset($_SESSION['cart'])) {
                         foreach ($categories['data'] as &$category) { ?>
                             <ul class="sub-nav">
                                 <li class="sub-nav__item">
-                                    <a href="?controller=product&action=category&id=<?= $category['id']  ?>" class="sub-nav__link"><?= $category['name'] ?></a>
+                                    <a href="?category=<?= $category['id']  ?>" class="sub-nav__link"><?= $category['name'] ?></a>
                                 </li>
                             </ul>
                     <?php  }
                     } ?>
                 </div>
-            </li>
-            <li class="header__nav-item">
-                <a href="contact.html" class="header__nav-link">Liên Hệ</a>
             </li>
         </ul>
     </div>

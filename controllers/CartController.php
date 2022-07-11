@@ -6,22 +6,20 @@ class CartController extends BaseController
     public function __construct()
     {
         $this->loadModel('ProductModel');
-        $this->loadModel('ShippingModel');
         $this->loadModel('CategoryModel');
         $this->productModel = new ProductModel;
         $this->CategoryModel = new CategoryModel;
-        $this->shippingModel = new ShippingModel;
     }
 
     public function index()
     {
         $categories = $this->CategoryModel->getAll();
         $products = $this->productModel->getAllEnoughQuantity();
-        $shippings = $this->shippingModel->getAll();
+        $productsSlide = $this->productModel->getAllEnoughQuantity();
         return $this->view('fontend.carts.index', [
             "products" => $products,
             "categories" => $categories,
-            "shippings" => $shippings
+            "productsSlide" => $productsSlide
         ]);
     }
 

@@ -10,7 +10,7 @@
 } ?>
 
 <body>
-    <?php count($products['data']) > 0 ? include 'views/fontend/common/slide.php' : '' ?>
+    <?php count($productsSlide['data']) > 0 ? include 'views/fontend/common/slide.php' : '' ?>
     <div class="main">
         <div class="grid wide">
             <h3 class="main__notify">

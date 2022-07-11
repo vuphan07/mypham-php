@@ -2,7 +2,7 @@
 
 <body>
 	<?php include 'views/fontend/common/header.php' ?>
-	<?php count($products['data']) > 0 ? include 'views/fontend/common/slide.php' : '' ?>
+	<?php count($productsSlide['data']) > 0 ? include 'views/fontend/common/slide.php' : '' ?>
 	<!--================Welcome Area =================-->
 	<!--Product Category -->
 	<div class="main__tabnine">
@@ -30,7 +30,7 @@
 											<h3 class="product__name"><?= $product['name'] ?></h3>
 											<div class="product__price">
 												<div class="price__old">
-													<?= $product['price'] ?>
+													<?= $product['price'] ?> đ
 												</div>
 												<div class="price__new"><?= (float)$product['price'] - (float)$product['discount'] ?> <span class="price__unit">đ</span></div>
 											</div>
