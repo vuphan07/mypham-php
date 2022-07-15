@@ -18,7 +18,7 @@ class ProductController extends BaseController
         $categories = $this->CategoryModel->getAll();
         return $this->view('fontend.products.index', [
             "products" => $products,
-            "categories" => $categories
+            "categories" => $categories,
         ]);
     }
 

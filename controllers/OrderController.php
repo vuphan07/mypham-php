@@ -20,8 +20,10 @@ class OrderController extends BaseController
         if ($myOrders == null) {
             return header("Location: index.php");
         }
+        $productsSlide = $this->productModel->getAllEnoughQuantity();
         return $this->view('fontend.orders.index', [
-            "orders" => $myOrders
+            "orders" => $myOrders,
+            "productsSlide" => $productsSlide,
         ]);
     }
 

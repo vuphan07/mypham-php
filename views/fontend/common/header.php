@@ -46,11 +46,12 @@ if (isset($_SESSION['cart'])) {
 
             <?php if (isset($_SESSION['user'])) { ?>
 
-                <div class="header__account" style="width:300px;display:flex;justify-content: space-around;">
+                <div class="header__account" style="width:400px;display:flex;justify-content: space-around;">
                     <a style="font-size: 16px; font-weight: bold;" href="#"><?= $_SESSION['user']['username'] ?></a>
                     <?php if ($_SESSION['user']['role'] == 'admin') { ?>
                         <a style="font-size: 16px; font-weight: bold;" href="admin.php">Trang quản trị</a>
                     <?php } ?>
+                    <a style="font-size: 16px; font-weight: bold;" href="?controller=order">Đơn hàng</a>
                     <a style="font-size: 16px; font-weight: bold;" href="?controller=user&action=logout">Đăng xuất</a>
                 </div>
             <?php } else { ?>

@@ -5,7 +5,7 @@ class OrderModel extends BaseModel
 
     public function getAll($select = ["*"])
     {
-        $sql = "SELECT orders.*,orderitems.product_id,orderitems.quantity,statusorders.name as namestatus,products.name as nameproduct, shippings.name as nameshipping FROM orders,orderitems,statusorders,products,shippings WHERE orders.id = orderitems.order_id AND orders.status = statusorders.id AND orderitems.product_id = products.id AND shippings.id = orders.shipping";
+        $sql = "SELECT orders.*,orderitems.product_id,orderitems.quantity,statusorders.name as namestatus,products.name as nameproduct FROM orders,orderitems,statusorders,products WHERE orders.id = orderitems.order_id AND orders.status = statusorders.id AND orderitems.product_id = products.id ";
         $result = $this->_query($sql);
         return $result;
     }
@@ -16,7 +16,7 @@ class OrderModel extends BaseModel
         if ($myinfo === null) {
             return null;
         }
-        $sql = "SELECT orders.*,orderitems.product_id,orderitems.quantity,statusorders.name as namestatus,products.name as nameproduct, shippings.name as nameshipping FROM orders,orderitems,statusorders,products,shippings WHERE orders.id = orderitems.order_id AND orders.status = statusorders.id AND orderitems.product_id = products.id AND shippings.id = orders.shipping AND orders.user_id = ${myinfo['id']}";
+        $sql = "SELECT orders.*,orderitems.product_id,orderitems.quantity,statusorders.name as namestatus,products.name as nameproduct FROM orders,orderitems,statusorders,products WHERE orders.id = orderitems.order_id AND orders.status = statusorders.id AND orderitems.product_id = products.id  AND orders.user_id = ${myinfo['id']}";
         $result = $this->_query($sql);
         return $result;
     }
